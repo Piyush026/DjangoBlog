@@ -1,4 +1,9 @@
 {% extends 'basic.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}">
 {% block title %}about{% endblock title %}
+{% block aboutactive %}active{% endblock aboutactive %}
+{% block img %}/static/img/about-bg.jpg {% endblock img %}
 {% block body %}
+<h3>data</h3>
 {% endblock body %}

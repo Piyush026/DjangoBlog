@@ -10,8 +10,20 @@
 
     <title>{% block title %} {% endblock title %}</title>
   </head>
+  <style>
+  body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('{% block img %} {% endblock img %}');
+    -webkit-background-size: cover;
+    {% comment %} background-repeat: no-repeat; {% endcomment %}
+    background-attachment: fixed;
+  {% comment %} background-size: cover; {% endcomment %}
+  opacity: 0.8;
+  {% comment %} position: relative; {% endcomment %}
+  }
+  
+  </style>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/">icode</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -19,16 +31,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item {% block homeactive %} {% endblock homeactive %}">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {% block aboutactive %} {% endblock aboutactive %}">
         <a class="nav-link" href="/about">About</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {% block contactactive %} {% endblock contactactive %}">
         <a class="nav-link" href="/contact">Contact</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {% block blogactive %} {% endblock blogactive %}">
         <a class="nav-link" href="/blog">Blog</a>
       </li>
       
@@ -38,7 +50,16 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
-</nav>
+</nav> 
+
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong>Message: </strong> {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
 {% block body %}
 {% endblock body %}
 

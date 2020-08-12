@@ -10,3 +10,5 @@ class Contact(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True,blank=False)
     
+    def __str__(self):
+        return self.name

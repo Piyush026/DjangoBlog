@@ -1,7 +1,17 @@
 {% extends 'basic.html' %}
 {% block title %}contact{% endblock title %}
+{% block contactactive %}active{% endblock contactactive %}
+{% block img %}/static/img/contact-bg.jpg {% endblock img %}
 {% block body %}
-<div class="container">
+<style>
+#loginForm {
+  width: 500px;
+  height: 400px;
+  position:relative;
+}
+
+</style>
+<div class="container my-3" id="loginForm">
 <form method='post' action='/contact/'>
 {% csrf_token %}
     <div class="form-group">
