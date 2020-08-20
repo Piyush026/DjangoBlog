@@ -1,7 +1,10 @@
-from django.shortcuts import render , HttpResponse
+from django.shortcuts import render , HttpResponse, redirect, HttpResponseRedirect
 from .models import Contact
 from django.contrib import messages
+from django.contrib.auth.models import User
 from blog.models import Post
+from django.db import IntegrityError
+
 # Create your views here.
 
 def index(request):
@@ -43,3 +46,35 @@ def search(request):
         context = {"query":data}
         messages.warning(request,"try another..")
     return render(request,'home/search.html',context)
+
+
+def signup(request):
+    try:
+        if request.method=="POST":
+            username = request.POST['username']
+            name = request.POST['name']
+            email = request.POST['email']
+            pass1 = request.POST['pass1']
+            pass2 = request.POST['pass2']
+            # validation
+            if pass1 != pass2:
+                messages.error(request,"password must be same and minimum 8 char")
+                return HttpResponseRedirect('/')
+            if len(pass1) < 8:
+                messages.error(request,"password must be minimum 8 char")
+                return HttpResponseRedirect('/')
+
+            icoderUser = User.objects.create_user(username,email,pass1)
+            icoderUser.first_name = username
+            icoderUser.last_name  =  name
+            icoderUser.save()
+            messages.success(request,"User created successfully")
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponse("404 NOT FOUND")
+    except IntegrityError:
+        messages.error(request,"Username must be unique")
+        return HttpResponseRedirect('/')
+    except:
+        return HttpResponse("404 NOT FOUND")
+        # return render_to_response("template.html", {"message": e.message})
