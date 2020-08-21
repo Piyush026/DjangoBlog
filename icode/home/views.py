@@ -1,6 +1,7 @@
 from django.shortcuts import render , HttpResponse, redirect, HttpResponseRedirect
 from .models import Contact
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from blog.models import Post
 from django.db import IntegrityError
@@ -78,3 +79,26 @@ def signup(request):
     except:
         return HttpResponse("404 NOT FOUND")
         # return render_to_response("template.html", {"message": e.message})
+
+
+def userlogin(request):
+    if request.method=='POST':
+        Uname = request.POST['Uname']
+        loginpass = request.POST['loginpass']
+
+        user =  authenticate(username=Uname,password=loginpass)
+        if user is not None:
+            login(request,user)
+            messages.success(request,"logged in successfully")
+            return redirect('home')
+        else:
+            messages.error(request,"invalid login")
+            return redirect('home')
+    return HttpResponse("404 not found")
+
+
+
+def userlogout(request):
+    logout(request)
+    messages.success(request,"logout successfully")
+    return redirect('home')
