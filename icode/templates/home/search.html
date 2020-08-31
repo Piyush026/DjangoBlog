@@ -1,0 +1,33 @@
+{% extends 'basic.html' %}
+
+{% load static  %}
+{% block title %}blog{% endblock title %}
+{% block blogactive %}active{% endblock blogactive %}
+{% block img %}/static/img/about-bg.jpg {% endblock img %}
+
+{% block body %}
+
+<style>
+.container {
+  color: white;
+  
+}
+</style>
+
+<div class="container my-3">
+<h2>Search results of: {{query}}</h2>
+{% for post in allPost  %}
+<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">Article By {{post.author}}</strong>
+          <h3 class="mb-0">{{post.tittle|capfirst}}</h3>
+          <div class="mb-1 text">{{post.timstamp |date:"M d, Y"}}</div>
+          <p class="card-text mb-auto">{{post.content | truncatewords:100}}</p>
+          <a href="#" class="stretched-link">Continue reading</a>
+        </div>
+        
+      </div>
+      {% endfor %}
+      </div>
+{% endblock body %}
