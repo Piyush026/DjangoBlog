@@ -22,7 +22,7 @@
           <strong class="d-inline-block mb-2 text-primary">Article By {{post.author}}</strong>
           <h3 class="mb-0">{{post.tittle|capfirst}}</h3>
           <div class="mb-1 text">{{post.timstamp |date:"M d, Y"}}</div>
-          <p class="card-text mb-auto">{{post.content | truncatewords:100}}</p>
+          <p class="card-text mb-auto">{{post.content|safe| truncatewords:100}}</p>
           <a href="{{post.slug}}" class="stretched-link">Continue reading</a>
         </div>
         
